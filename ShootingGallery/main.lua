@@ -14,6 +14,8 @@ function love.load()
     sprites.sky = love.graphics.newImage('sprites/sky.png')
     sprites.target = love.graphics.newImage('sprites/target.png')
     sprites.crosshairs = love.graphics.newImage('sprites/crosshairs.png')
+
+    love.mouse.setVisible(false) 
 end
 
 --dt é Delta Time. É essa funcão que faz o loop
@@ -30,16 +32,15 @@ end
  
 --esssa funcão roda junto com update no mesmo tempo com tudo relacionado aos gráficos
 function love.draw()
-    love.graphics.setColor(1,0,0)
-    love.graphics.circle('fill',target.x,target.y,target.radius)
+    love.graphics.draw(sprites.sky,0,0)
 
-    
     love.graphics.setColor(1,1,1)
     love.graphics.setFont(gameFont)
     love.graphics.print(score,0,0)
     love.graphics.print(math.ceil(timer), 300,0)
 
-    love.graphics.draw(sprites.crosshairs,300,100 )
+    love.graphics.draw(sprites.target, target.x -target.radius, target.y-target.radius) 
+    love.graphics.draw(sprites.crosshairs,love.mouse.getX()-20,love.mouse.getY()-20)
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
