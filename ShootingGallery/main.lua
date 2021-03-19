@@ -9,6 +9,11 @@ function love.load()
     timer = 10
 
     gameFont = love.graphics.newFont(50)
+
+    sprites = {}
+    sprites.sky = love.graphics.newImage('sprites/sky.png')
+    sprites.target = love.graphics.newImage('sprites/target.png')
+    sprites.crosshairs = love.graphics.newImage('sprites/crosshairs.png')
 end
 
 --dt é Delta Time. É essa funcão que faz o loop
@@ -17,7 +22,7 @@ function love.update(dt)
     if timer > 0 then
         timer = timer - dt
     end
-    
+
     if timer < 0 then
         timer = 0
     end
@@ -33,6 +38,8 @@ function love.draw()
     love.graphics.setFont(gameFont)
     love.graphics.print(score,0,0)
     love.graphics.print(math.ceil(timer), 300,0)
+
+    love.graphics.draw(sprites.crosshairs,300,100 )
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
