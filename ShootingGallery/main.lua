@@ -6,7 +6,7 @@ function love.load()
     target.radius = 50
     
     score = 0
-    timer = 0
+    timer = 10
 
     gameFont = love.graphics.newFont(50)
 end
@@ -14,9 +14,15 @@ end
 --dt é Delta Time. É essa funcão que faz o loop
 --Por padrão jogos feitos com love tem 60fps, ou seja, rodam 60 vezes por segundo
 function love.update(dt) 
+    if timer > 0 then
+        timer = timer - dt
+    end
     
+    if timer < 0 then
+        timer = 0
+    end
 end
-
+ 
 --esssa funcão roda junto com update no mesmo tempo com tudo relacionado aos gráficos
 function love.draw()
     love.graphics.setColor(1,0,0)
@@ -26,13 +32,16 @@ function love.draw()
     love.graphics.setColor(1,1,1)
     love.graphics.setFont(gameFont)
     love.graphics.print(score,0,0)
+    love.graphics.print(math.ceil(timer), 300,0)
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
      if button == 1 then
           local mouseToTarget = distanceBetween(x,y,target.x,target.y)
           if mouseToTarget < target.radius then
-            score = score + 1 
+            score = score + 1  
+            target.x = math.random(target.radius, love.graphics.getWidth() - target.radius)
+            target.y = math.random(target.radius, love.graphics.getHeight() - target.radius)
           end
      end
 end
